@@ -1,4 +1,3 @@
-
 variable "net_resource_group_name" {
   type = string
   default = "CAPIC_WoS_WoS-VRF_westus"

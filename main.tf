@@ -6,14 +6,6 @@ terraform {
   }
 }
 
-provider "azurerm" {
-  features {}
-  // Requires ENV variable ARM_SUBSCRIPTION_ID
-  // Requires ENV variable ARM_CLIENT_ID
-  // Requires ENV variable ARM_CLIENT_SECRET
-  // Requires ENV variable ARM_TENANT_ID
-}
-
 data "azurerm_resource_group" "vms" {
   name     = var.vm_resource_group_name
 }
@@ -58,13 +50,13 @@ resource "azurerm_linux_virtual_machine" "vm1" {
   resource_group_name = data.azurerm_resource_group.vms.name
   location            = data.azurerm_resource_group.vms.location
   size                = "Standard_DS1_v2"
-  admin_username      = "centos"
+  admin_username      = var.vm_user_name
   network_interface_ids = [
     azurerm_network_interface.interface1.id,
   ]
 
   admin_ssh_key {
-    username   = "centos"
+    username   = var.vm_user_name
     public_key = var.ssh_pub_key
   }
 
